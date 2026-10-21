@@ -1,0 +1,15 @@
+.env
+*.log
+*.log.*
+*.state
+*.csv
+*.hist
+*.sent
+*.bak-*
+config.local.json
+alerts.txt
+onchain-alerts.txt
+heartbeats/
+__pycache__/
+*.pyc
+.DS_Store

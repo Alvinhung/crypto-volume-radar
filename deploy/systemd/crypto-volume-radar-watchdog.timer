@@ -1,0 +1,10 @@
+# sudo systemctl enable --now crypto-volume-radar-watchdog.timer
+[Unit]
+Description=Run the crypto-volume-radar watchdog every 5 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+
+[Install]
+WantedBy=timers.target

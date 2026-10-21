@@ -1,0 +1,162 @@
+{
+  "_comment": "Generic example. Copy to config.local.json (gitignored) and put YOUR own rules and thresholds there. These placeholder numbers are illustrative, not tuned, and not a trading recommendation.",
+  "tz_hours": 0,
+  "binance": {
+    "fapi_base": "https://fapi.binance.com"
+  },
+  "heartbeat": {
+    "dir": "heartbeats",
+    "stale_factor": 3,
+    "deadman_url": "",
+    "ignore": []
+  },
+  "radar": {
+    "interval": "5m",
+    "min_24h_usd": 20000000,
+    "workers": 8,
+    "cooldown_bars": 12,
+    "min_bar_usd": 100000,
+    "oi_on_hit": true,
+    "log_csv": "signals.csv",
+    "windows": {
+      "base_n": 20,
+      "chg_n": 3,
+      "low_n": 48,
+      "peak_n": 12,
+      "high_n": 20
+    },
+    "rules": [
+      {
+        "code": "VOL_SPIKE",
+        "icon": "🔔",
+        "title": "Volume spike",
+        "desc": "Volume far above its recent median",
+        "when": [
+          [
+            "vr",
+            ">=",
+            10
+          ],
+          [
+            "abs_chgN",
+            "<",
+            0.03
+          ]
+        ]
+      },
+      {
+        "code": "BREAKOUT",
+        "icon": "⬆️",
+        "title": "Breakout on volume",
+        "desc": "Price up over the last few bars on heavy volume",
+        "when": [
+          [
+            "vr",
+            ">=",
+            5
+          ],
+          [
+            "chgN",
+            ">=",
+            0.08
+          ],
+          [
+            "green",
+            "==",
+            true
+          ],
+          [
+            "new_high",
+            "==",
+            true
+          ]
+        ]
+      },
+      {
+        "code": "SELLOFF",
+        "icon": "⬇️",
+        "title": "Sell-off on volume",
+        "desc": "Price down over the last few bars on heavy volume",
+        "when": [
+          [
+            "vr",
+            ">=",
+            5
+          ],
+          [
+            "chgN",
+            "<=",
+            -0.08
+          ],
+          [
+            "red",
+            "==",
+            true
+          ]
+        ]
+      }
+    ],
+    "suppress": [
+      [
+        "BREAKOUT",
+        "VOL_SPIKE"
+      ]
+    ],
+    "plugins": [],
+    "plugin_params": {},
+    "highlight": {
+      "signals": [],
+      "max_market_cap": 0,
+      "prefix": "★",
+      "title": "small cap"
+    },
+    "rr": {
+      "enabled": false,
+      "signals": [
+        "BREAKOUT"
+      ],
+      "stop_lookback_bars": 12,
+      "stop_buffer": 0.0,
+      "stop_atr_mult": 2.0,
+      "target_atr_cap": 4.0,
+      "hi_lookback_h": 72,
+      "atr_len": 14,
+      "min_target": 0.02,
+      "max_target": 0.5,
+      "volume_wall": true,
+      "bucket": 0.02,
+      "wall_share": 0.03
+    }
+  },
+  "alerts": {
+    "file": "alerts.txt",
+    "every_s": 30,
+    "rearm_band": 0.01,
+    "cooldown_s": 3600,
+    "bybit_fallback": false,
+    "context": true
+  },
+  "context": {
+    "daily_bars": 120,
+    "overhead_band": 0.02,
+    "overhead_thin_days": 2,
+    "overhead_thick_days": 10,
+    "min_extreme_days": 7
+  },
+  "onchain": {
+    "file": "onchain-alerts.txt",
+    "every_s": 120,
+    "min_request_gap_s": 3,
+    "rearm_band": 0.01,
+    "cooldown_s": 3600,
+    "pools": [
+      {
+        "name": "EXAMPLE",
+        "network": "solana",
+        "pool": "REPLACE_WITH_YOUR_POOL_ADDRESS",
+        "every_s": 120,
+        "enabled": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+# Copy to onchain-alerts.txt. Same format as alerts.txt; SYMBOL = a pool "name" from config onchain.pools
+EXAMPLE  >=  1.00   example level
+*EXAMPLE <=  0.01   example repeatable level

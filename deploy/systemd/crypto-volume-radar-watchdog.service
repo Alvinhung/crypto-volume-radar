@@ -1,0 +1,8 @@
+[Unit]
+Description=crypto-volume-radar heartbeat watchdog
+
+[Service]
+Type=oneshot
+User=radar
+WorkingDirectory=/opt/crypto-volume-radar
+ExecStart=/opt/crypto-volume-radar/run.sh watchdog.py

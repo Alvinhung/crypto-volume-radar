@@ -1,0 +1,5 @@
+# Copy to alerts.txt. One alert per line:  SYMBOL  >=|<=  PRICE  [note]
+# Prefix * = repeatable (re-arms after price moves away); otherwise fires once.
+# BB: prefix = price from Bybit linear (for symbols not on Binance futures).
+BTCUSDT  >=  200000   example: round-number breakout
+*ETHUSDT <=  1000     example: repeatable level

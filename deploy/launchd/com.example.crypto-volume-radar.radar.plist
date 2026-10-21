@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  macOS LaunchAgent example. Replace __INSTALL_DIR__ with the absolute path of your clone,
+  change the label prefix to your own reverse-DNS name, and copy one plist per script:
+    sed "s|__INSTALL_DIR__|$PWD|g" deploy/launchd/com.example.crypto-volume-radar.radar.plist \
+      > ~/Library/LaunchAgents/com.example.crypto-volume-radar.radar.plist
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.example.crypto-volume-radar.radar.plist
+  Note: launchd restarts crashed processes but cannot keep a sleeping laptop awake.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.example.crypto-volume-radar.radar</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>__INSTALL_DIR__/run.sh</string>
+        <string>radar.py</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>__INSTALL_DIR__</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+    <key>StandardOutPath</key>
+    <string>__INSTALL_DIR__/radar.log</string>
+    <key>StandardErrorPath</key>
+    <string>__INSTALL_DIR__/radar.log</string>
+    <key>ProcessType</key>
+    <string>Background</string>
+</dict>
+</plist>

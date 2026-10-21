@@ -1,0 +1,24 @@
+# systemd template unit: one instance per script.
+#   sudo cp deploy/systemd/crypto-volume-radar@.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now crypto-volume-radar@radar crypto-volume-radar@alerts crypto-volume-radar@onchain-alert
+#   journalctl -u crypto-volume-radar@radar -f
+# Adjust User= and the install path (/opt/crypto-volume-radar) to your setup.
+[Unit]
+Description=crypto-volume-radar: %i
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=radar
+WorkingDirectory=/opt/crypto-volume-radar
+ExecStart=/opt/crypto-volume-radar/run.sh %i.py
+Restart=always
+RestartSec=30
+# Optional hardening
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
